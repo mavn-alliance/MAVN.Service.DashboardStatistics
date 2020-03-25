@@ -1,0 +1,38 @@
+DashboardStatisticsService:
+  Db:
+    LogsConnString:
+      settings-key: DashboardStatisticsService-LogsConnString
+      types:
+        - AzureTableStorage
+    MsSqlConnectionString:
+      settings-key: DashboardStatisticsService-MsSqlConnectionString
+  RabbitMq:
+    ReferralRabbitMqConnectionString:
+      settings-key: ReferralRabbitMQ
+      types:
+        - RabbitMq
+    CustomerRabbitMqConnectionString:
+      settings-key: UserManagementRabbitMQ
+      types:
+        - RabbitMq
+    WalletManagementRabbitMqConnectionString:
+      settings-key: WalletManagementRabbitMQ
+      types:
+        - RabbitMq
+
+TokensStatisticsJobClient:
+  ServiceUrl:
+    settings-key: TokensStatisticsJobUrl
+
+SlackNotifications:
+  AzureQueue:
+    ConnectionString:
+      settings-key: SlackNotificationsConnString
+      types:
+        - AzureTableStorage
+    QueueName:
+      settings-key: SlackQueueName
+
+MonitoringServiceClient:
+  MonitoringServiceUrl:
+    settings-key: MonitoringServiceUrl
