@@ -1,5 +1,5 @@
-using System.Collections.Generic;
-using Falcon.Numerics;
+﻿using System.Collections.Generic;
+using MAVN.Numerics;
 
 namespace MAVN.Service.DashboardStatistics.Client.Models.Tokens
 {

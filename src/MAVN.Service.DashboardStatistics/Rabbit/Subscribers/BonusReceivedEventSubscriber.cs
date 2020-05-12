@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Common.Log;
 using Lykke.RabbitMqBroker.Subscriber;
 using MAVN.Service.DashboardStatistics.Domain.Services;
-using Lykke.Service.WalletManagement.Contract.Events;
+using MAVN.Service.WalletManagement.Contract.Events;
 
 namespace MAVN.Service.DashboardStatistics.Rabbit.Subscribers
 {

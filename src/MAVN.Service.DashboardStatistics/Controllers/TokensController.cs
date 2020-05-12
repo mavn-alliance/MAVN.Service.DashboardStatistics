@@ -1,8 +1,8 @@
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
-using Lykke.Job.TokensStatistics.Client;
-using Lykke.Job.TokensStatistics.Client.Models.Requests;
+using MAVN.Job.TokensStatistics.Client;
+using MAVN.Job.TokensStatistics.Client.Models.Requests;
 using MAVN.Service.DashboardStatistics.Client.Api;
 using MAVN.Service.DashboardStatistics.Client.Models.Tokens;
 using Microsoft.AspNetCore.Mvc;
