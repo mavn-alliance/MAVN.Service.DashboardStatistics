@@ -1,10 +1,10 @@
-using Autofac;
+﻿using Autofac;
 using Common;
 using JetBrains.Annotations;
-using Lykke.Job.TokensStatistics.Client;
 using MAVN.Service.DashboardStatistics.Rabbit.Subscribers;
 using MAVN.Service.DashboardStatistics.Settings;
 using Lykke.SettingsReader;
+using MAVN.Job.TokensStatistics.Client;
 
 namespace MAVN.Service.DashboardStatistics
 {
@@ -16,7 +16,6 @@ namespace MAVN.Service.DashboardStatistics
         private const string LeadStateChangedExchangeName = "lykke.bonus.leadstatechanged";
         private const string CustomerRegisteredExchangeName = "lykke.customer.registration";
         private const string PartnersPaymentTokensReservedExchangeName = "lykke.wallet.partnerspaymenttokensreserved";
-        private const string PaymentTransferTokensReservedExchangeName = "lykke.wallet.transfertokensreserved";
         private const string CustomerPhoneVerifiedEventExchangeName = "lykke.customer.phoneverified";
 
         private readonly AppSettings _settings;
@@ -63,14 +62,7 @@ namespace MAVN.Service.DashboardStatistics
                 .WithParameter("connectionString", rabbitMqSettings.WalletManagementRabbitMqConnectionString)
                 .WithParameter("exchangeName", PartnersPaymentTokensReservedExchangeName)
                 .WithParameter("queueName", QueueName);
-
-            builder.RegisterType<PaymentTransferTokensReservedEventSubscriber>()
-                .As<IStartable>()
-                .As<IStopable>()
-                .WithParameter("connectionString", rabbitMqSettings.WalletManagementRabbitMqConnectionString)
-                .WithParameter("exchangeName", PaymentTransferTokensReservedExchangeName)
-                .WithParameter("queueName", QueueName);
-
+            
             builder.RegisterType<CustomerPhoneVerifiedEventSubscriber>()
                 .As<IStartable>()
                 .As<IStopable>()

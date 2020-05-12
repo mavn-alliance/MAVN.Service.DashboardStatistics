@@ -1,5 +1,5 @@
-using AutoMapper;
-using Lykke.Job.TokensStatistics.Client.Models.Responses;
+﻿using AutoMapper;
+using MAVN.Job.TokensStatistics.Client.Models.Responses;
 using MAVN.Service.DashboardStatistics.Client.Models.Customers;
 using MAVN.Service.DashboardStatistics.Client.Models.Leads;
 using MAVN.Service.DashboardStatistics.Client.Models.Tokens;
@@ -27,7 +27,7 @@ namespace MAVN.Service.DashboardStatistics
             CreateMap<LeadStatisticModel, LeadsStatisticsModel>();
 
             //Tokens
-            CreateMap<TokensListRequestModel, Lykke.Job.TokensStatistics.Client.Models.Requests.PeriodRequest>();
+            CreateMap<TokensListRequestModel, MAVN.Job.TokensStatistics.Client.Models.Requests.PeriodRequest>();
             CreateMap<TokensStatisticResponse, TokensStatisticsModel>();
             CreateMap<TokensStatisticListResponse, TokensListResponseModel>();
         }

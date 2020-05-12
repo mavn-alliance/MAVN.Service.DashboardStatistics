@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.Log;
@@ -6,7 +6,7 @@ using Lykke.Common.Log;
 using Lykke.RabbitMqBroker.Subscriber;
 using MAVN.Service.DashboardStatistics.Domain.Models.LeadStatistic;
 using MAVN.Service.DashboardStatistics.Domain.Services;
-using Lykke.Service.Referral.Contract.Events;
+using MAVN.Service.Referral.Contract.Events;
 
 namespace MAVN.Service.DashboardStatistics.Rabbit.Subscribers
 {
