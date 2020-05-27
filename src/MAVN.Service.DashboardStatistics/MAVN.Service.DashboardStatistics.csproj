@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <OutputType>Exe</OutputType>
@@ -21,13 +21,13 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Lykke.Sdk" Version="5.17.0" />
-    <PackageReference Include="Lykke.RabbitMqBroker" Version="7.13.1" />
+    <PackageReference Include="Lykke.RabbitMqBroker" Version="7.13.2" />
     <PackageReference Include="MAVN.Job.TokensStatistics.Client" Version="1.1.0" />
     <PackageReference Include="MAVN.Service.CustomerManagement.Contract" Version="1.1.0" />
-    <PackageReference Include="MAVN.Service.CustomerProfile.Contract" Version="1.2.0" />
-    <PackageReference Include="MAVN.Service.PartnersPayments.Contract" Version="1.0.1" />
+    <PackageReference Include="MAVN.Service.CustomerProfile.Contract" Version="1.3.0" />
+    <PackageReference Include="MAVN.Service.PartnersPayments.Contract" Version="1.1.0" />
     <PackageReference Include="MAVN.Service.Referral.Contract" Version="2.0.0" />
-    <PackageReference Include="MAVN.Service.WalletManagement.Contract" Version="1.0.1" />
+    <PackageReference Include="MAVN.Service.WalletManagement.Contract" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\client\MAVN.Service.DashboardStatistics.Client\MAVN.Service.DashboardStatistics.Client.csproj" />
