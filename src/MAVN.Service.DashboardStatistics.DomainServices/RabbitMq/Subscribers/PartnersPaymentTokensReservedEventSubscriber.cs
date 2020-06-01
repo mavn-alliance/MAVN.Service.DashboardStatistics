@@ -6,7 +6,7 @@ using Lykke.RabbitMqBroker.Subscriber;
 using MAVN.Service.DashboardStatistics.Domain.Services;
 using MAVN.Service.PartnersPayments.Contract;
 
-namespace MAVN.Service.DashboardStatistics.Rabbit.Subscribers
+namespace MAVN.Service.DashboardStatistics.DomainServices.RabbitMq.Subscribers
 {
     public class PartnersPaymentTokensReservedEventSubscriber : JsonRabbitSubscriber<PartnersPaymentTokensReservedEvent>
     {

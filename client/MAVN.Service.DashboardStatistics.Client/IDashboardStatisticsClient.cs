@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using MAVN.Service.DashboardStatistics.Client.Api;
 
 namespace MAVN.Service.DashboardStatistics.Client
@@ -13,11 +13,6 @@ namespace MAVN.Service.DashboardStatistics.Client
         /// Customers API.
         /// </summary>
         ICustomersApi CustomersApi { get; }
-
-        /// <summary>
-        /// Leads API.
-        /// </summary>
-        ILeadsApi LeadsApi { get; }
 
         /// <summary>
         /// Tokens API.

@@ -1,4 +1,4 @@
-using Lykke.HttpClientGenerator;
+﻿using Lykke.HttpClientGenerator;
 using MAVN.Service.DashboardStatistics.Client.Api;
 
 namespace MAVN.Service.DashboardStatistics.Client
@@ -12,15 +12,11 @@ namespace MAVN.Service.DashboardStatistics.Client
         public DashboardStatisticsClient(IHttpClientGenerator httpClientGenerator)
         {
             CustomersApi = httpClientGenerator.Generate<ICustomersApi>();
-            LeadsApi = httpClientGenerator.Generate<ILeadsApi>();
             TokensApi = httpClientGenerator.Generate<ITokensApi>();
         }
 
         /// <inheritdoc />
         public ICustomersApi CustomersApi { get; }
-
-        /// <inheritdoc />
-        public ILeadsApi LeadsApi { get; }
 
         /// <inheritdoc />
         public ITokensApi TokensApi { get; }

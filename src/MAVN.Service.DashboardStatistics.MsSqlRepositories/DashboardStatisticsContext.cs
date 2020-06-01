@@ -1,4 +1,4 @@
-using System.Data.Common;
+﻿using System.Data.Common;
 using MAVN.Common.MsSql;
 using MAVN.Service.DashboardStatistics.MsSqlRepositories.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -28,8 +28,6 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
 
         public DbSet<CustomerStatisticEntity> CustomerStatistics { get; set; }
 
-        public DbSet<LeadStatisticEntity> LeadStatistics { get; set; }
-
         protected override void OnLykkeConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
@@ -38,6 +36,10 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
         {
             modelBuilder.Entity<CustomerStatisticEntity>()
                 .HasIndex(c => c.CustomerId);
+
+            modelBuilder.Entity<CustomerStatisticEntity>()
+                .HasIndex(c => c.PartnerId)
+                .IsUnique(false);
         }
     }
 }

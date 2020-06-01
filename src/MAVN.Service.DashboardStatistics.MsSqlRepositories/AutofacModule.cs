@@ -1,4 +1,4 @@
-using Autofac;
+﻿using Autofac;
 using MAVN.Common.MsSql;
 using MAVN.Service.DashboardStatistics.Domain.Repositories;
 using MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories;
@@ -26,10 +26,6 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
 
             builder.RegisterType<CustomerStatisticRepository>()
                 .As<ICustomerRegistrationRepository>()
-                .SingleInstance();
-
-            builder.RegisterType<LeadStatisticRepository>()
-                .As<ILeadStatisticRepository>()
                 .SingleInstance();
         }
     }

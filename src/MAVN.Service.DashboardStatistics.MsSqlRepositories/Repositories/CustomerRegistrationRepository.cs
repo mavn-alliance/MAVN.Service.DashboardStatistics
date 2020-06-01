@@ -1,4 +1,4 @@
-using MAVN.Common.MsSql;
+﻿using MAVN.Common.MsSql;
 using MAVN.Service.DashboardStatistics.Domain.Repositories;
 using MAVN.Service.DashboardStatistics.MsSqlRepositories.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -25,32 +25,47 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
                 var items = await context.CustomerStatistics
                     .Where(o => startDate <= o.TimeStamp && o.TimeStamp <= endDate)
                     .GroupBy(o => o.TimeStamp.Date)
-                    .Select(o => new {Date = o.Key, Count = o.Count()})
+                    .Select(o => new { Date = o.Key, Count = o.Count() })
                     .ToListAsync();
 
                 return items.ToDictionary(o => o.Date, o => o.Count);
             }
         }
 
-        public async Task<int> GetCountSync(DateTime endDate)
+        public async Task<int> GetCountSync(DateTime endDate, Guid? partnerId)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
-                var count = await context.CustomerStatistics
-                    .Where(o => o.TimeStamp <= endDate)
-                    .CountAsync();
+                var query = context.CustomerStatistics
+                    .Where(o => o.TimeStamp <= endDate);
 
+                if (partnerId.HasValue)
+                    query = query.Where(o => o.PartnerId == partnerId);
+
+                var count = await query.CountAsync();
                 return count;
             }
         }
 
-        public async Task InsertAsync(Guid customerId, DateTime registrationDate)
+        public async Task InsertIfNotExistsAsync(Guid customerId, Guid? partnerId, DateTime registrationDate)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
+                if (partnerId.HasValue)
+                {
+                    var alreadyExists = await context.CustomerStatistics.AnyAsync(x =>
+                        x.CustomerId == customerId && x.PartnerId == partnerId);
+
+                    if (alreadyExists)
+                        return;
+                }
+
                 await context.AddAsync(new CustomerStatisticEntity
                 {
-                    Id = Guid.NewGuid(), CustomerId = customerId, TimeStamp = registrationDate
+                    Id = Guid.NewGuid(),
+                    CustomerId = customerId,
+                    PartnerId = partnerId,
+                    TimeStamp = registrationDate
                 });
 
                 await context.SaveChangesAsync();

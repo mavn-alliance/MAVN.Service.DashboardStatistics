@@ -1,4 +1,4 @@
-using MAVN.Service.DashboardStatistics.Client.Models.Customers;
+﻿using MAVN.Service.DashboardStatistics.Client.Models.Customers;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
@@ -34,7 +34,7 @@ namespace MAVN.Service.DashboardStatistics.Controllers
             var startDate = request.FromDate.Date;
             var endDate = request.ToDate.Date.AddDays(1).AddMilliseconds(-1);
 
-            var statistic = await _customerStatisticService.GetAsync(startDate, endDate);
+            var statistic = await _customerStatisticService.GetAsync(startDate, endDate, request.PartnerId);
 
             return _mapper.Map<CustomersStatisticResponse>(statistic);
         }

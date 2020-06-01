@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,6 +14,9 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Entities
         [Required]
         [Column("customer_id")]
         public Guid CustomerId { get; set; }
+
+        [Column("partner_id")]
+        public Guid? PartnerId { get; set; }
 
         [Column("time_stamp")]
         public DateTime TimeStamp { get; set; }

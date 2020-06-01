@@ -6,7 +6,7 @@ using Lykke.RabbitMqBroker.Subscriber;
 using MAVN.Service.DashboardStatistics.Domain.Services;
 using MAVN.Service.WalletManagement.Contract.Events;
 
-namespace MAVN.Service.DashboardStatistics.Rabbit.Subscribers
+namespace MAVN.Service.DashboardStatistics.DomainServices.RabbitMq.Subscribers
 {
     public class BonusReceivedEventSubscriber : JsonRabbitSubscriber<BonusReceivedEvent>
     {

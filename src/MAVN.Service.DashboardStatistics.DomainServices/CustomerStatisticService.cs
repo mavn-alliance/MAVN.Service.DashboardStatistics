@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,28 +21,41 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
             _customerActivityRepository = customerActivityRepository;
         }
 
-        public async Task<CustomersStatistic> GetAsync(DateTime startDate, DateTime endDate)
+        public async Task<CustomersStatistic> GetAsync(DateTime startDate, DateTime endDate, Guid? partnerId)
         {
-            var totalCustomersTask = _customerRegistrationRepository.GetCountSync(endDate);
+            var newCustomersPerDate = new List<CustomersCountAtDate>();
+
+            var totalCustomers = await _customerRegistrationRepository.GetCountSync(endDate, partnerId);
+
+            if (totalCustomers == 0)
+            {
+                return new CustomersStatistic
+                {
+                    NewCustomers = newCustomersPerDate,
+                    TotalActiveCustomers = 0,
+                    TotalCustomers = 0,
+                    TotalNewCustomers = 0,
+                    TotalNonActiveCustomers = 0,
+                };
+            }
+
             var customersCountPerDayTask = _customerRegistrationRepository.GetCountPerDayAsync(startDate, endDate);
             var activeCustomersCountTask = _customerActivityRepository.GetCountAsync(startDate, endDate);
 
-            await Task.WhenAll(totalCustomersTask, customersCountPerDayTask, activeCustomersCountTask);
-
-            var newCustomersPerDate = new List<CustomersCountAtDate>();
+            await Task.WhenAll(customersCountPerDayTask, activeCustomersCountTask);
 
             for (var date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
             {
                 customersCountPerDayTask.Result.TryGetValue(date, out var customersCount);
 
-                newCustomersPerDate.Add(new CustomersCountAtDate {Date = date, Count = customersCount});
+                newCustomersPerDate.Add(new CustomersCountAtDate { Date = date, Count = customersCount });
             }
 
             var statistic = new CustomersStatistic
             {
-                TotalCustomers = totalCustomersTask.Result,
+                TotalCustomers = totalCustomers,
                 TotalActiveCustomers = activeCustomersCountTask.Result,
-                TotalNonActiveCustomers = totalCustomersTask.Result - activeCustomersCountTask.Result,
+                TotalNonActiveCustomers = totalCustomers - activeCustomersCountTask.Result,
                 TotalNewCustomers = customersCountPerDayTask.Result.Sum(o => o.Value),
                 NewCustomers = newCustomersPerDate
             };
@@ -50,9 +63,9 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
             return statistic;
         }
 
-        public Task AddRegistrationDateAsync(Guid customerId, DateTime registrationDate)
+        public Task AddRegistrationDateAsync(Guid customerId, Guid? partnerId, DateTime registrationDate)
         {
-            return _customerRegistrationRepository.InsertAsync(customerId, registrationDate);
+            return _customerRegistrationRepository.InsertIfNotExistsAsync(customerId, partnerId, registrationDate);
         }
 
         public Task AddActivityDateAsync(Guid customerId, DateTime activityDate)

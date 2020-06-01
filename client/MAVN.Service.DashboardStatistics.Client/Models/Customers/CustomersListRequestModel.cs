@@ -1,3 +1,5 @@
+﻿using System;
+
 namespace MAVN.Service.DashboardStatistics.Client.Models.Customers
 {
     /// <summary>
@@ -5,5 +7,9 @@ namespace MAVN.Service.DashboardStatistics.Client.Models.Customers
     /// </summary>
     public class CustomersListRequestModel : BasePeriodRequestModel
     {
+        /// <summary>
+        /// Id of the partner, used for filtering
+        /// </summary>
+        public Guid? PartnerId { get; set; }
     }
 }
