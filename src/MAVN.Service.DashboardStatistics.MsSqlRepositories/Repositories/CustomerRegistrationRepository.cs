@@ -51,11 +51,14 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
         {
             using (var context = _contextFactory.CreateDataContext())
             {
-                var alreadyExists = await context.CustomerStatistics.AnyAsync(x =>
-                    x.CustomerId == customerId && partnerId.HasValue && x.PartnerId == partnerId);
+                if (partnerId.HasValue)
+                {
+                    var alreadyExists = await context.CustomerStatistics.AnyAsync(x =>
+                        x.CustomerId == customerId && x.PartnerId == partnerId);
 
-                if (alreadyExists)
-                    return;
+                    if (alreadyExists)
+                        return;
+                }
 
                 await context.AddAsync(new CustomerStatisticEntity
                 {
