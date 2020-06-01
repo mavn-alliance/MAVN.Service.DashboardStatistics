@@ -1,4 +1,4 @@
-using Autofac;
+﻿using Autofac;
 using MAVN.Service.DashboardStatistics.Domain.Services;
 
 namespace MAVN.Service.DashboardStatistics.DomainServices
@@ -7,10 +7,6 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<LeadStatisticService>()
-                .As<ILeadStatisticService>()
-                .SingleInstance();
-
             builder.RegisterType<CustomerStatisticService>()
                 .As<ICustomerStatisticService>()
                 .SingleInstance();

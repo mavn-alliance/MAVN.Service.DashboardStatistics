@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Lykke.Common;
 using Lykke.SettingsReader;
-using MAVN.Service.DashboardStatistics.Rabbit.Subscribers;
+using MAVN.Service.DashboardStatistics.DomainServices.RabbitMq.Subscribers;
 using MAVN.Service.DashboardStatistics.Settings;
 using MAVN.Service.DashboardStatistics.Settings.Service.Rabbit;
 
@@ -13,9 +13,8 @@ namespace MAVN.Service.DashboardStatistics.Modules
     {
         private const string QueueName = "dashboard-statistic";
         private const string BonusReceivedExchangeName = "lykke.wallet.bonusreceived";
-        private const string LeadStateChangedExchangeName = "lykke.bonus.leadstatechanged";
         private const string PartnersPaymentTokensReservedExchangeName = "lykke.wallet.partnerspaymenttokensreserved";
-        private const string CustomerPhoneVerifiedEventExchangeName = "lykke.customer.phoneverified";
+        private const string SmartVoucherSoldExchangeName = "lykke.smart-vouchers.vouchersold";
 
         private readonly RabbitMqSettings _settings;
 
@@ -34,22 +33,16 @@ namespace MAVN.Service.DashboardStatistics.Modules
                 .WithParameter("exchangeName", BonusReceivedExchangeName)
                 .WithParameter("queueName", QueueName);
 
-            builder.RegisterType<LeadStateChangedSubscriber>()
-                .As<IStartStop>()
-                .WithParameter("connectionString", _settings.ReferralRabbitMqConnectionString)
-                .WithParameter("exchangeName", LeadStateChangedExchangeName)
-                .WithParameter("queueName", QueueName);
-
             builder.RegisterType<PartnersPaymentTokensReservedEventSubscriber>()
                 .As<IStartStop>()
                 .WithParameter("connectionString", _settings.WalletManagementRabbitMqConnectionString)
                 .WithParameter("exchangeName", PartnersPaymentTokensReservedExchangeName)
                 .WithParameter("queueName", QueueName);
 
-            builder.RegisterType<CustomerPhoneVerifiedEventSubscriber>()
+            builder.RegisterType<SmartVoucherSoldSubscriber>()
                 .As<IStartStop>()
-                .WithParameter("connectionString", _settings.CustomerRabbitMqConnectionString)
-                .WithParameter("exchangeName", CustomerPhoneVerifiedEventExchangeName)
+                .WithParameter("connectionString", _settings.WalletManagementRabbitMqConnectionString)
+                .WithParameter("exchangeName", SmartVoucherSoldExchangeName)
                 .WithParameter("queueName", QueueName);
         }
     }
