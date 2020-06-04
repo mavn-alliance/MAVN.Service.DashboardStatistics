@@ -63,12 +63,14 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
                          .Where(el => el.OperationType == VoucherOperationType.Buy)
                          .Sum(y => y.Amount),
                      TotalPurchasesCount = x.Value
-                         .Count(el => el.OperationType == VoucherOperationType.Buy),
+                         .Where(el => el.OperationType == VoucherOperationType.Buy)
+                         .Sum(t => t.TotalCount),
                      TotalRedeemedVouchersCost = x.Value
                          .Where(el => el.OperationType == VoucherOperationType.Redeem)
                          .Sum(y => y.Amount),
                      TotalRedeemedVouchersCount = x.Value
-                         .Count(el => el.OperationType == VoucherOperationType.Redeem)
+                         .Where(el => el.OperationType == VoucherOperationType.Redeem)
+                         .Sum(t => t.TotalCount)
                  }).ToList();
         }
     }

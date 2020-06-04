@@ -14,5 +14,7 @@ namespace MAVN.Service.DashboardStatistics.Domain.Models.VoucherStatistic
         public VoucherOperationType OperationType { get; set; }
 
         public decimal Amount { get; set; }
+
+        public int TotalCount { get; set; }
     }
 }

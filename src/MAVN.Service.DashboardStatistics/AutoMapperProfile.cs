@@ -24,7 +24,8 @@ namespace MAVN.Service.DashboardStatistics
             CreateMap<TokensStatisticListResponse, TokensListResponseModel>();
 
             CreateMap<CurrenciesStatistic, VoucherStatisticsResponse>();
-            CreateMap<VoucherOperationsStatisticsEntity, VoucherOperationsStatistic>();
+            CreateMap<VoucherOperationsStatisticsEntity, VoucherOperationsStatistic>()
+                .ForMember(dest => dest.Amount, opt => opt.MapFrom(src => src.Sum));
         }
     }
 }
