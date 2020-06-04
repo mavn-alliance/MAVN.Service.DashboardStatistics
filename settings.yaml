@@ -22,7 +22,7 @@ DashboardStatisticsService:
   Redis:
     ConnectionString:
       settings-key: DashboardStatisticsService-Redis-ConnectionString
-  VoucherLockTimeOut:
+  LockTimeOut:
     settings-key: DashboardStatisticsService-LockTimeOut
 TokensStatisticsJobClient:
   ServiceUrl:
