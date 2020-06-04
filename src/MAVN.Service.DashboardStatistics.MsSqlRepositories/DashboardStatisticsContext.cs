@@ -1,5 +1,7 @@
-﻿using System.Data.Common;
+﻿using System;
+using System.Data.Common;
 using MAVN.Common.MsSql;
+using MAVN.Service.DashboardStatistics.Domain.Enums;
 using MAVN.Service.DashboardStatistics.MsSqlRepositories.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,6 +30,8 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
 
         public DbSet<CustomerStatisticEntity> CustomerStatistics { get; set; }
 
+        public DbSet<VoucherOperationsStatisticsEntity> VoucherOperationsStatistics { get; set; }
+
         protected override void OnLykkeConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
@@ -40,6 +44,18 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
             modelBuilder.Entity<CustomerStatisticEntity>()
                 .HasIndex(c => c.PartnerId)
                 .IsUnique(false);
+
+            modelBuilder.Entity<VoucherOperationsStatisticsEntity>()
+                .HasIndex(c => new
+                {
+                    c.PartnerId,
+                    c.OperationType
+                })
+                .IsUnique(false);
+            modelBuilder.Entity<VoucherOperationsStatisticsEntity>()
+                .Property(p => p.OperationType)
+                .HasConversion(v => v.ToString(),
+                    v => (VoucherOperationType)Enum.Parse(typeof(VoucherOperationType), v));
         }
     }
 }

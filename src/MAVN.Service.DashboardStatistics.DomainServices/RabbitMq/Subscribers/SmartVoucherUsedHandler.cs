@@ -7,12 +7,11 @@ using MAVN.Service.SmartVouchers.Contract;
 
 namespace MAVN.Service.DashboardStatistics.DomainServices.RabbitMq.Subscribers
 {
-    public class SmartVoucherSoldSubscriber : JsonRabbitSubscriber<SmartVoucherSoldEvent>
+    public class SmartVoucherUsedHandler : JsonRabbitSubscriber<SmartVoucherUsedEvent>
     {
         private readonly ICustomerStatisticService _customerStatisticService;
 
-        public SmartVoucherSoldSubscriber
-            (
+        public SmartVoucherUsedHandler(
             ICustomerStatisticService customerStatisticService,
             string connectionString,
             string exchangeName,
@@ -23,11 +22,10 @@ namespace MAVN.Service.DashboardStatistics.DomainServices.RabbitMq.Subscribers
             _customerStatisticService = customerStatisticService;
         }
 
-
-        protected override async Task ProcessMessageAsync(SmartVoucherSoldEvent message)
+        protected override async Task ProcessMessageAsync(SmartVoucherUsedEvent message)
         {
             await _customerStatisticService.AddRegistrationDateAsync(message.CustomerId, message.PartnerId,
-                message.Timestamp, VoucherOperationType.Buy, message.Amount, message.Currency);
+                message.Timestamp, VoucherOperationType.Redeem, message.Amount, message.Currency);
         }
     }
 }
