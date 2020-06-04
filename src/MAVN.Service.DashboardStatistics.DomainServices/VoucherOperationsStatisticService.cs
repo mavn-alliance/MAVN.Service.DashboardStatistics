@@ -6,6 +6,7 @@ using MAVN.Service.DashboardStatistics.Domain.Enums;
 using MAVN.Service.DashboardStatistics.Domain.Models.VoucherStatistic;
 using MAVN.Service.DashboardStatistics.Domain.Repositories;
 using MAVN.Service.DashboardStatistics.Domain.Services;
+using MongoDB.Driver;
 
 namespace MAVN.Service.DashboardStatistics.DomainServices
 {
@@ -45,33 +46,36 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
                 await _redisLocksService.ReleaseLockAsync(lockValue, lockValue);
                 return;
             }
+
+            throw new InvalidOperationException("Couldn't acquire a lock in Redis");
         }
 
         public async Task<IList<CurrenciesStatistic>> GetCurrenciesStatistic(Guid[] partnerIds)
         {
             var statistic = await _voucherOperationsStatisticRepository.GetByPartnerIds(partnerIds);
-
-            var groupByCurrencyStatistic = statistic
+            var dict = statistic
                 .GroupBy(x => x.Currency)
-                .ToDictionary(x => x.Key, v => v.ToList());
+                .ToDictionary(x => x.Key, v => new CurrenciesStatistic() { Currency = v.Key });
 
-            return groupByCurrencyStatistic.Select(x =>
-                 new CurrenciesStatistic()
-                 {
-                     Currency = x.Key,
-                     TotalPurchasesCost = x.Value
-                         .Where(el => el.OperationType == VoucherOperationType.Buy)
-                         .Sum(y => y.Amount),
-                     TotalPurchasesCount = x.Value
-                         .Where(el => el.OperationType == VoucherOperationType.Buy)
-                         .Sum(t => t.TotalCount),
-                     TotalRedeemedVouchersCost = x.Value
-                         .Where(el => el.OperationType == VoucherOperationType.Redeem)
-                         .Sum(y => y.Amount),
-                     TotalRedeemedVouchersCount = x.Value
-                         .Where(el => el.OperationType == VoucherOperationType.Redeem)
-                         .Sum(t => t.TotalCount)
-                 }).ToList();
+            foreach (var s in statistic)
+            {
+                var currency = s.Currency;
+                var element = dict[currency];
+
+                switch (s.OperationType)
+                {
+                    case VoucherOperationType.Redeem:
+                        element.TotalRedeemedVouchersCost += s.Amount;
+                        element.TotalRedeemedVouchersCount++;
+                        break;
+                    case VoucherOperationType.Buy:
+                        element.TotalPurchasesCost += s.Amount;
+                        element.TotalPurchasesCount++;
+                        break;
+                }
+            }
+
+            return dict.Values.ToList();
         }
     }
 }
