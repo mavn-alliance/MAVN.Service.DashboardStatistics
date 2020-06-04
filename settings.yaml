@@ -19,7 +19,11 @@ DashboardStatisticsService:
       settings-key: WalletManagementRabbitMQ
       types:
         - RabbitMq
-
+  Redis:
+    ConnectionString:
+      settings-key: DashboardStatisticsService-Redis-ConnectionString
+  VoucherLockTimeOut:
+    settings-key: DashboardStatisticsService-LockTimeOut
 TokensStatisticsJobClient:
   ServiceUrl:
     settings-key: TokensStatisticsJobUrl
