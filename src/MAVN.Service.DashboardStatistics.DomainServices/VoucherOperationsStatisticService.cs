@@ -64,11 +64,11 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
                 {
                     case VoucherOperationType.Redeem:
                         element.TotalRedeemedVouchersCost += s.Amount;
-                        element.TotalRedeemedVouchersCount++;
+                        element.TotalRedeemedVouchersCount += s.TotalCount;
                         break;
                     case VoucherOperationType.Buy:
                         element.TotalPurchasesCost += s.Amount;
-                        element.TotalPurchasesCount++;
+                        element.TotalPurchasesCount += s.TotalCount;
                         break;
                 }
             }
