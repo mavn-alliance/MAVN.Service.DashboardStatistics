@@ -6,8 +6,6 @@ using MAVN.Service.DashboardStatistics.Domain.Enums;
 using MAVN.Service.DashboardStatistics.Domain.Models.VoucherStatistic;
 using MAVN.Service.DashboardStatistics.Domain.Repositories;
 using MAVN.Service.DashboardStatistics.Domain.Services;
-using MongoDB.Driver;
-
 namespace MAVN.Service.DashboardStatistics.DomainServices
 {
     public class VoucherOperationsStatisticService : IVoucherOperationsStatisticService
