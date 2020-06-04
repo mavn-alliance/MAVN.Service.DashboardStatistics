@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MAVN.Service.DashboardStatistics.Domain.Enums;
 using MAVN.Service.DashboardStatistics.Domain.Models.Customers;
+using MAVN.Service.DashboardStatistics.Domain.Models.VoucherStatistic;
 using MAVN.Service.DashboardStatistics.Domain.Repositories;
 using MAVN.Service.DashboardStatistics.Domain.Services;
 
@@ -12,13 +14,16 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
     {
         private readonly ICustomerRegistrationRepository _customerRegistrationRepository;
         private readonly ICustomerActivityRepository _customerActivityRepository;
+        private readonly IVoucherOperationsStatisticService _voucherOperationsStatisticService;
 
         public CustomerStatisticService(
             ICustomerRegistrationRepository customerRegistrationRepository,
-            ICustomerActivityRepository customerActivityRepository)
+            ICustomerActivityRepository customerActivityRepository,
+            IVoucherOperationsStatisticService voucherOperationsStatisticService)
         {
             _customerRegistrationRepository = customerRegistrationRepository;
             _customerActivityRepository = customerActivityRepository;
+            _voucherOperationsStatisticService = voucherOperationsStatisticService;
         }
 
         public async Task<CustomersStatistic> GetAsync(DateTime startDate, DateTime endDate, Guid? partnerId)
@@ -63,9 +68,20 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
             return statistic;
         }
 
-        public Task AddRegistrationDateAsync(Guid customerId, Guid? partnerId, DateTime registrationDate)
+        public async Task AddRegistrationDateAsync(Guid customerId, Guid? partnerId, DateTime registrationDate,
+            VoucherOperationType operationType, decimal amount, string currency)
         {
-            return _customerRegistrationRepository.InsertIfNotExistsAsync(customerId, partnerId, registrationDate);
+            await _customerRegistrationRepository.InsertIfNotExistsAsync(customerId, partnerId, registrationDate);
+
+            var model = new UpdateVoucherOperationsStatistic()
+            {
+                PartnerId = partnerId.GetValueOrDefault(),
+                Amount = amount,
+                OperationType = operationType,
+                Currency = currency,
+            };
+
+            await _voucherOperationsStatisticService.UpdateVoucherOperationsStatistic(model);
         }
 
         public Task AddActivityDateAsync(Guid customerId, DateTime activityDate)

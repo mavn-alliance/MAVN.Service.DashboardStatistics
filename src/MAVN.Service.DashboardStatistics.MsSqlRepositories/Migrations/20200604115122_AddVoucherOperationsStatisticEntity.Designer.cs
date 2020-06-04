@@ -4,14 +4,16 @@ using MAVN.Service.DashboardStatistics.MsSqlRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Migrations
 {
     [DbContext(typeof(DashboardStatisticsContext))]
-    partial class DashboardStatisticsContextModelSnapshot : ModelSnapshot
+    [Migration("20200604115122_AddVoucherOperationsStatisticEntity")]
+    partial class AddVoucherOperationsStatisticEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

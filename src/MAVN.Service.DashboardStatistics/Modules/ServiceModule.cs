@@ -3,6 +3,8 @@ using JetBrains.Annotations;
 using Lykke.Sdk;
 using Lykke.SettingsReader;
 using MAVN.Job.TokensStatistics.Client;
+using MAVN.Service.DashboardStatistics.Domain.Services;
+using MAVN.Service.DashboardStatistics.DomainServices;
 using MAVN.Service.DashboardStatistics.Services;
 using MAVN.Service.DashboardStatistics.Settings;
 
@@ -35,6 +37,16 @@ namespace MAVN.Service.DashboardStatistics.Modules
             // Clients
 
             builder.RegisterTokensStatisticsClient(_settings.TokensStatisticsJobClient, null);
+
+            builder.RegisterType<RedisLocksService>()
+                .As<IRedisLocksService>()
+                .SingleInstance();
+
+            builder.RegisterType<VoucherOperationsStatisticService>()
+                .As<IVoucherOperationsStatisticService>()
+                .WithParameter(TypedParameter.From(_settings.DashboardStatisticsService.LockTimeOut))
+                .AutoActivate()
+                .SingleInstance();
         }
     }
 }
