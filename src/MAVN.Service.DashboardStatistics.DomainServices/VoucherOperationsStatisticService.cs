@@ -51,29 +51,32 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
         public async Task<IList<CurrenciesStatistic>> GetCurrenciesStatistic(Guid[] partnerIds)
         {
             var statistic = await _voucherOperationsStatisticRepository.GetByPartnerIds(partnerIds);
-            var dict = statistic
-                .GroupBy(x => x.Currency)
-                .ToDictionary(x => x.Key, v => new CurrenciesStatistic() { Currency = v.Key });
-
-            foreach (var s in statistic)
+            var currencyGroups = statistic
+                .GroupBy(x => x.Currency);
+            var currenciesStatistics = new List<CurrenciesStatistic>();
+            foreach (var currencyGroup in currencyGroups)
             {
-                var currency = s.Currency;
-                var element = dict[currency];
+                var element = new CurrenciesStatistic() { Currency = currencyGroup.Key };
 
-                switch (s.OperationType)
+                foreach (var operationsStatistic in currencyGroup)
                 {
-                    case VoucherOperationType.Redeem:
-                        element.TotalRedeemedVouchersCost += s.Amount;
-                        element.TotalRedeemedVouchersCount += s.TotalCount;
-                        break;
-                    case VoucherOperationType.Buy:
-                        element.TotalPurchasesCost += s.Amount;
-                        element.TotalPurchasesCount += s.TotalCount;
-                        break;
+                    switch (operationsStatistic.OperationType)
+                    {
+                        case VoucherOperationType.Redeem:
+                            element.TotalRedeemedVouchersCost += operationsStatistic.Amount;
+                            element.TotalRedeemedVouchersCount += operationsStatistic.TotalCount;
+                            break;
+                        case VoucherOperationType.Buy:
+                            element.TotalPurchasesCost += operationsStatistic.Amount;
+                            element.TotalPurchasesCount += operationsStatistic.TotalCount;
+                            break;
+                    }
                 }
+
+                currenciesStatistics.Add(element);
             }
 
-            return dict.Values.ToList();
+            return currenciesStatistics;
         }
     }
 }
