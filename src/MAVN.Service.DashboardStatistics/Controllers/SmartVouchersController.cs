@@ -34,5 +34,15 @@ namespace MAVN.Service.DashboardStatistics.Controllers
 
             return currenciesStatistic.Select(x => _mapper.Map<VoucherStatisticsResponse>(x)).ToList();
         }
+
+        [HttpPost]
+        [Route("period")]
+        [ProducesResponseType(typeof(VoucherDailyStatisticsResponse), (int)HttpStatusCode.OK)]
+        public async Task<VoucherDailyStatisticsResponse> GetPeriodStatsAsync(VouchersDailyStatisticsRequest request)
+        {
+            var statistics = await _partnerStatisticService.GetPartnerDailyVoucherStatistic(request.PartnerIds, request.FromDate, request.ToDate);
+
+            return _mapper.Map<VoucherDailyStatisticsResponse>(statistics);
+        }
     }
 }

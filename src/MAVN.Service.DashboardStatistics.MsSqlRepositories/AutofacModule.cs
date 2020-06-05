@@ -31,6 +31,10 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
             builder.RegisterType<VoucherOperationsStatisticRepository>()
                 .As<IVoucherOperationsStatisticRepository>()
                 .SingleInstance();
+
+            builder.RegisterType<PartnerVouchersDailyStatsRepository>()
+                .As<IPartnerVouchersDailyStatsRepository>()
+                .SingleInstance();
         }
     }
 }

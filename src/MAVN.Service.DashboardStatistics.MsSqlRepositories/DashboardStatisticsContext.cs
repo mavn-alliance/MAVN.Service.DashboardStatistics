@@ -32,6 +32,8 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
 
         public DbSet<VoucherOperationsStatisticsEntity> VoucherOperationsStatistics { get; set; }
 
+        public DbSet<PartnerVouchersDailyStatsEntity> PartnerVouchersDailyStatistics { get; set; }
+
         protected override void OnLykkeConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
@@ -52,10 +54,20 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
                     c.OperationType
                 })
                 .IsUnique(false);
+
             modelBuilder.Entity<VoucherOperationsStatisticsEntity>()
                 .Property(p => p.OperationType)
                 .HasConversion(v => v.ToString(),
                     v => (VoucherOperationType)Enum.Parse(typeof(VoucherOperationType), v));
+
+            modelBuilder.Entity<PartnerVouchersDailyStatsEntity>()
+                .Property(p => p.OperationType)
+                .HasConversion(v => v.ToString(),
+                    v => (VoucherOperationType)Enum.Parse(typeof(VoucherOperationType), v));
+
+            modelBuilder.Entity<PartnerVouchersDailyStatsEntity>()
+                .HasIndex(x => new {x.PartnerId, x.OperationType})
+                .IsUnique(false);
         }
     }
 }
