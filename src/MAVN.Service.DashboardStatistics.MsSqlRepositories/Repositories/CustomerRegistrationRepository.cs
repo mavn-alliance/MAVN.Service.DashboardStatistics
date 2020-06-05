@@ -18,29 +18,34 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
             _contextFactory = contextFactory;
         }
 
-        public async Task<IReadOnlyDictionary<DateTime, int>> GetCountPerDayAsync(DateTime startDate, DateTime endDate)
+        public async Task<IReadOnlyDictionary<DateTime, int>> GetCountPerDayAsync(DateTime startDate, DateTime endDate, Guid[] partnerIds)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
-                var items = await context.CustomerStatistics
-                    .Where(o => startDate <= o.TimeStamp && o.TimeStamp <= endDate)
+                var query = context.CustomerStatistics
+                    .Where(o => startDate <= o.TimeStamp && o.TimeStamp <= endDate);
+
+                if (partnerIds != null && partnerIds.Any())
+                    query = query.Where(o => o.PartnerId.HasValue && partnerIds.Contains(o.PartnerId.Value));
+
+                var items = await query
                     .GroupBy(o => o.TimeStamp.Date)
                     .Select(o => new { Date = o.Key, Count = o.Count() })
-                    .ToListAsync();
+                    .ToDictionaryAsync(k => k.Date, v => v.Count);
 
-                return items.ToDictionary(o => o.Date, o => o.Count);
+                return items;
             }
         }
 
-        public async Task<int> GetCountSync(DateTime endDate, Guid? partnerId)
+        public async Task<int> GetCountSync(DateTime endDate, Guid[] partnerIds)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
                 var query = context.CustomerStatistics
                     .Where(o => o.TimeStamp <= endDate);
 
-                if (partnerId.HasValue)
-                    query = query.Where(o => o.PartnerId == partnerId);
+                if (partnerIds != null && partnerIds.Any())
+                    query = query.Where(o => o.PartnerId.HasValue && partnerIds.Contains(o.PartnerId.Value));
 
                 var count = await query.CountAsync();
                 return count;

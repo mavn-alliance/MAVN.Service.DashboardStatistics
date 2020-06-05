@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace MAVN.Service.DashboardStatistics.Client.Models.Customers
@@ -28,6 +28,11 @@ namespace MAVN.Service.DashboardStatistics.Client.Models.Customers
         /// Represents a total count of new registered customers for selected period
         /// </summary>
         public int TotalNewCustomers { get; set; }
+
+        /// <summary>
+        /// The count of repeat active customers in a specific period.
+        /// </summary>
+        public int TotalRepeatCustomers { get; set; }
 
         /// <summary>
         /// Represents a list of new registered customers by days for selected period

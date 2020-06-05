@@ -8,8 +8,8 @@ namespace MAVN.Service.DashboardStatistics.Client.Models.Customers
     public class CustomersListRequestModel : BasePeriodRequestModel
     {
         /// <summary>
-        /// Id of the partner, used for filtering
+        /// Ids of partners, used for filtering
         /// </summary>
-        public Guid? PartnerId { get; set; }
+        public Guid[] PartnerIds { get; set; }
     }
 }

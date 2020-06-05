@@ -28,6 +28,9 @@ namespace MAVN.Service.DashboardStatistics.DomainServices.RabbitMq.Subscribers
         {
             await _customerStatisticService.AddRegistrationDateAsync(message.CustomerId, message.PartnerId,
                 message.Timestamp, VoucherOperationType.Buy, message.Amount, message.Currency);
+
+            await _customerStatisticService.AddActivityDateAsync(message.CustomerId, message.Timestamp,
+                message.PartnerId, ActivityType.VoucherBought);
         }
     }
 }

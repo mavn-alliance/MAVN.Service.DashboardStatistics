@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MAVN.Service.DashboardStatistics.Domain.Models.Customers
 {
@@ -26,6 +26,11 @@ namespace MAVN.Service.DashboardStatistics.Domain.Models.Customers
         /// The count of registered customers in a specific period.
         /// </summary>
         public int TotalNewCustomers { get; set; }
+
+        /// <summary>
+        /// The count of repeat active customers in a specific period.
+        /// </summary>
+        public int TotalRepeatCustomers { get; set; }
 
         /// <summary>
         /// The list of registered customers per days in a specific period.

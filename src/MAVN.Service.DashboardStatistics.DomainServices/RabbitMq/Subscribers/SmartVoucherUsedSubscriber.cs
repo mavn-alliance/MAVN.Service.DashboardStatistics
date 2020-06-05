@@ -7,11 +7,11 @@ using MAVN.Service.SmartVouchers.Contract;
 
 namespace MAVN.Service.DashboardStatistics.DomainServices.RabbitMq.Subscribers
 {
-    public class SmartVoucherUsedHandler : JsonRabbitSubscriber<SmartVoucherUsedEvent>
+    public class SmartVoucherUsedSubscriber : JsonRabbitSubscriber<SmartVoucherUsedEvent>
     {
         private readonly ICustomerStatisticService _customerStatisticService;
 
-        public SmartVoucherUsedHandler(
+        public SmartVoucherUsedSubscriber(
             ICustomerStatisticService customerStatisticService,
             string connectionString,
             string exchangeName,
@@ -26,6 +26,9 @@ namespace MAVN.Service.DashboardStatistics.DomainServices.RabbitMq.Subscribers
         {
             await _customerStatisticService.AddRegistrationDateAsync(message.CustomerId, message.PartnerId,
                 message.Timestamp, VoucherOperationType.Redeem, message.Amount, message.Currency);
+
+            await _customerStatisticService.AddActivityDateAsync(message.CustomerId, message.Timestamp,
+                message.PartnerId, ActivityType.VoucherUsed);
         }
     }
 }

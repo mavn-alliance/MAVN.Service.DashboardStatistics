@@ -15,6 +15,7 @@ namespace MAVN.Service.DashboardStatistics.Modules
         private const string BonusReceivedExchangeName = "lykke.wallet.bonusreceived";
         private const string PartnersPaymentTokensReservedExchangeName = "lykke.wallet.partnerspaymenttokensreserved";
         private const string SmartVoucherSoldExchangeName = "lykke.smart-vouchers.vouchersold";
+        private const string SmartVoucherUsedExchangeName = "lykke.smart-vouchers.voucherused";
 
         private readonly RabbitMqSettings _settings;
 
@@ -43,6 +44,12 @@ namespace MAVN.Service.DashboardStatistics.Modules
                 .As<IStartStop>()
                 .WithParameter("connectionString", _settings.WalletManagementRabbitMqConnectionString)
                 .WithParameter("exchangeName", SmartVoucherSoldExchangeName)
+                .WithParameter("queueName", QueueName);
+
+            builder.RegisterType<SmartVoucherUsedSubscriber>()
+                .As<IStartStop>()
+                .WithParameter("connectionString", _settings.WalletManagementRabbitMqConnectionString)
+                .WithParameter("exchangeName", SmartVoucherUsedExchangeName)
                 .WithParameter("queueName", QueueName);
         }
     }

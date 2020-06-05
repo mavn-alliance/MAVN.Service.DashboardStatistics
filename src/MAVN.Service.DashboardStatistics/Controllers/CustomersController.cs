@@ -34,7 +34,7 @@ namespace MAVN.Service.DashboardStatistics.Controllers
             var startDate = request.FromDate.Date;
             var endDate = request.ToDate.Date.AddDays(1).AddMilliseconds(-1);
 
-            var statistic = await _customerStatisticService.GetAsync(startDate, endDate, request.PartnerId);
+            var statistic = await _customerStatisticService.GetAsync(startDate, endDate, request.PartnerIds);
 
             return _mapper.Map<CustomersStatisticResponse>(statistic);
         }
