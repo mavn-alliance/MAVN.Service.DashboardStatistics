@@ -1,12 +1,14 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace MAVN.Service.DashboardStatistics.Domain.Repositories
 {
     public interface ICustomerActivityRepository
     {
-        Task<int> GetCountAsync(DateTime startDate, DateTime endDate);
+        Task<int> GetCountAsync(DateTime startDate, DateTime endDate, Guid[] partnerIds);
 
         Task InsertAsync(Guid customerId, DateTime activityDate);
+
+        Task<int> GetRepeatCountAsync(DateTime startDate, DateTime endDate, Guid[] partnerIds);
     }
 }

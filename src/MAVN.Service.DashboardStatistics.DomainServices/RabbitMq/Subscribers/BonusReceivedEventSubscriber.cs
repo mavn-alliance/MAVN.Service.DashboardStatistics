@@ -38,7 +38,7 @@ namespace MAVN.Service.DashboardStatistics.DomainServices.RabbitMq.Subscribers
 
             try
             {
-                await _customerStatisticService.AddActivityDateAsync(customerId, message.Timestamp);
+                await _customerStatisticService.AddActivityDateAsync(customerId, message.Timestamp, null, null);
             }
             catch (Exception exception)
             {

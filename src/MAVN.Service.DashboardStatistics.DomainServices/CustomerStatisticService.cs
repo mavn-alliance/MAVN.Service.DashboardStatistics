@@ -26,11 +26,11 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
             _voucherOperationsStatisticService = voucherOperationsStatisticService;
         }
 
-        public async Task<CustomersStatistic> GetAsync(DateTime startDate, DateTime endDate, Guid? partnerId)
+        public async Task<CustomersStatistic> GetAsync(DateTime startDate, DateTime endDate, Guid[] partnerIds)
         {
             var newCustomersPerDate = new List<CustomersCountAtDate>();
 
-            var totalCustomers = await _customerRegistrationRepository.GetCountSync(endDate, partnerId);
+            var totalCustomers = await _customerRegistrationRepository.GetCountSync(endDate, partnerIds);
 
             if (totalCustomers == 0)
             {
@@ -41,13 +41,15 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
                     TotalCustomers = 0,
                     TotalNewCustomers = 0,
                     TotalNonActiveCustomers = 0,
+                    TotalRepeatCustomers = 0,
                 };
             }
 
-            var customersCountPerDayTask = _customerRegistrationRepository.GetCountPerDayAsync(startDate, endDate);
-            var activeCustomersCountTask = _customerActivityRepository.GetCountAsync(startDate, endDate);
+            var customersCountPerDayTask = _customerRegistrationRepository.GetCountPerDayAsync(startDate, endDate, partnerIds);
+            var activeCustomersCountTask = _customerActivityRepository.GetCountAsync(startDate, endDate, partnerIds);
+            var repeaterCustomersCountTask = _customerActivityRepository.GetRepeatCountAsync(startDate, endDate, partnerIds);
 
-            await Task.WhenAll(customersCountPerDayTask, activeCustomersCountTask);
+            await Task.WhenAll(customersCountPerDayTask, activeCustomersCountTask, repeaterCustomersCountTask);
 
             for (var date = startDate.Date; date <= endDate.Date; date = date.AddDays(1))
             {
@@ -62,7 +64,8 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
                 TotalActiveCustomers = activeCustomersCountTask.Result,
                 TotalNonActiveCustomers = totalCustomers - activeCustomersCountTask.Result,
                 TotalNewCustomers = customersCountPerDayTask.Result.Sum(o => o.Value),
-                NewCustomers = newCustomersPerDate
+                NewCustomers = newCustomersPerDate,
+                TotalRepeatCustomers = repeaterCustomersCountTask.Result,
             };
 
             return statistic;
@@ -84,7 +87,7 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
             await _voucherOperationsStatisticService.UpdateVoucherOperationsStatistic(model);
         }
 
-        public Task AddActivityDateAsync(Guid customerId, DateTime activityDate)
+        public Task AddActivityDateAsync(Guid customerId, DateTime activityDate, Guid? partnerId, ActivityType? activityType)
         {
             return _customerActivityRepository.InsertAsync(customerId, activityDate);
         }

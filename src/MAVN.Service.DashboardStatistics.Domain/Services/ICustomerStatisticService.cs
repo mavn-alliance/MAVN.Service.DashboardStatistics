@@ -7,11 +7,11 @@ namespace MAVN.Service.DashboardStatistics.Domain.Services
 {
     public interface ICustomerStatisticService
     {
-        Task<CustomersStatistic> GetAsync(DateTime fromDate, DateTime toDate, Guid? partnerId);
+        Task<CustomersStatistic> GetAsync(DateTime fromDate, DateTime toDate, Guid[] partnerIds);
 
         Task AddRegistrationDateAsync(Guid customerId, Guid? partnerId, DateTime registrationDate,
             VoucherOperationType operationType, decimal amount, string currency);
 
-        Task AddActivityDateAsync(Guid customerId, DateTime activityDate);
+        Task AddActivityDateAsync(Guid customerId, DateTime activityDate, Guid? partnerId, ActivityType? activityType);
     }
 }
