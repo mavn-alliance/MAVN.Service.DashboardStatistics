@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MAVN.Service.DashboardStatistics.Client.Models.VoucherStatistic
 {
@@ -10,6 +11,7 @@ namespace MAVN.Service.DashboardStatistics.Client.Models.VoucherStatistic
         /// <summary>
         /// Collection of partner ids
         /// </summary>
+        [Required]
         public Guid[] PartnerIds { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace MAVN.Service.DashboardStatistics.Controllers
         [HttpPost]
         [Route("totals")]
         [ProducesResponseType(typeof(IList<VoucherStatisticsResponse>), (int)HttpStatusCode.OK)]
-        public async Task<IList<VoucherStatisticsResponse>> GetTotalStatisticsAsync(Guid[] partnerIds)
+        public async Task<IList<VoucherStatisticsResponse>> GetTotalStatisticsAsync([FromBody][Required] Guid[] partnerIds)
         {
             var currenciesStatistic = await _partnerStatisticService.GetCurrenciesStatistic(partnerIds);
 
@@ -38,7 +39,7 @@ namespace MAVN.Service.DashboardStatistics.Controllers
         [HttpPost]
         [Route("period")]
         [ProducesResponseType(typeof(VoucherDailyStatisticsResponse), (int)HttpStatusCode.OK)]
-        public async Task<VoucherDailyStatisticsResponse> GetPeriodStatsAsync(VouchersDailyStatisticsRequest request)
+        public async Task<VoucherDailyStatisticsResponse> GetPeriodStatsAsync([FromBody] VouchersDailyStatisticsRequest request)
         {
             var statistics = await _partnerStatisticService.GetPartnerDailyVoucherStatistic(request.PartnerIds, request.FromDate, request.ToDate);
 
