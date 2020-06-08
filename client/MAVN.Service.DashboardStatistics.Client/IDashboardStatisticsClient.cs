@@ -18,5 +18,10 @@ namespace MAVN.Service.DashboardStatistics.Client
         /// Tokens API.
         /// </summary>
         ITokensApi TokensApi { get; }
+
+        /// <summary>
+        /// SmartVouchers API.
+        /// </summary>
+        ISmartVouchersApi SmartVouchersApi { get; }
     }
 }
