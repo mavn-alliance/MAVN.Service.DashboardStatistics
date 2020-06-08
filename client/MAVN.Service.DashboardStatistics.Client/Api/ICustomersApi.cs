@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using JetBrains.Annotations;
 using MAVN.Service.DashboardStatistics.Client.Models.Customers;
 using Refit;
@@ -16,7 +16,7 @@ namespace MAVN.Service.DashboardStatistics.Client.Api
         /// </summary>
         /// <param name="request">Filtering parameter.</param>
         /// <returns>A customer statistics.</returns>
-        [Get("/api/customers")]
+        [Post("/api/customers")]
         Task<CustomersStatisticResponse> GetAsync(CustomersListRequestModel request);
     }
 }
