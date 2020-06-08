@@ -17,6 +17,6 @@ namespace MAVN.Service.DashboardStatistics.Client.Api
         /// <param name="request">Filtering parameter.</param>
         /// <returns>A customer statistics.</returns>
         [Post("/api/customers")]
-        Task<CustomersStatisticResponse> GetAsync(CustomersListRequestModel request);
+        Task<CustomersStatisticResponse> GetAsync([Body] CustomersListRequestModel request);
     }
 }
