@@ -18,7 +18,7 @@ namespace MAVN.Service.DashboardStatistics.Client.Api
         /// </summary>
         /// <param name="partnerIds"></param>
         /// <returns></returns>
-        [Post("/api/smartvoucher/totals")]
+        [Post("/api/smartvouchers/totals")]
         Task<IList<VoucherStatisticsResponse>> GetTotalStatisticsAsync(Guid[] partnerIds);
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace MAVN.Service.DashboardStatistics.Client.Api
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        [Post("/api/smartvoucher/period")]
+        [Post("/api/smartvouchers/period")]
         Task<VoucherDailyStatisticsResponse> GetPeriodStatsAsync(VouchersDailyStatisticsRequest request);
     }
 }
