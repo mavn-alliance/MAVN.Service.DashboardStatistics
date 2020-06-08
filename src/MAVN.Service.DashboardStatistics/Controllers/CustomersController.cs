@@ -27,9 +27,9 @@ namespace MAVN.Service.DashboardStatistics.Controllers
         /// <param name="request">Filtering parameter.</param>
         /// <returns>A customer statistics.</returns>
         /// <response code="200">A customer statistics.</response>
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(typeof(CustomersStatisticResponse), (int) HttpStatusCode.OK)]
-        public async Task<CustomersStatisticResponse> GetAsync([FromQuery] CustomersListRequestModel request)
+        public async Task<CustomersStatisticResponse> GetAsync([FromBody] CustomersListRequestModel request)
         {
             var startDate = request.FromDate.Date;
             var endDate = request.ToDate.Date.AddDays(1).AddMilliseconds(-1);
