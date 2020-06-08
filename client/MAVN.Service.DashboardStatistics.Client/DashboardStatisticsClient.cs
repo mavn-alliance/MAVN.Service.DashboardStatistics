@@ -13,6 +13,7 @@ namespace MAVN.Service.DashboardStatistics.Client
         {
             CustomersApi = httpClientGenerator.Generate<ICustomersApi>();
             TokensApi = httpClientGenerator.Generate<ITokensApi>();
+            SmartVouchersApi = httpClientGenerator.Generate<ISmartVouchersApi>();
         }
 
         /// <inheritdoc />
@@ -20,5 +21,8 @@ namespace MAVN.Service.DashboardStatistics.Client
 
         /// <inheritdoc />
         public ITokensApi TokensApi { get; }
+
+        /// <inheritdoc />
+        public ISmartVouchersApi SmartVouchersApi { get; }
     }
 }
