@@ -62,11 +62,16 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
         {
             using (var context = _contextFactory.CreateDataContext())
             {
-                var entities = await context.VoucherOperationsStatistics
-                    .Where(x => partnerIds.Contains(x.Id))
+                var query =  context.VoucherOperationsStatistics.AsQueryable();
+
+                if (partnerIds != null && partnerIds.Any())
+                    query = query.Where(x => partnerIds.Contains(x.PartnerId));
+
+                var result = await query
+                    .Select(x => _mapper.Map<VoucherOperationsStatistic>(x))
                     .ToListAsync();
 
-                return entities.Select(x => _mapper.Map<VoucherOperationsStatistic>(x)).ToList();
+                return result;
             }
         }
     }

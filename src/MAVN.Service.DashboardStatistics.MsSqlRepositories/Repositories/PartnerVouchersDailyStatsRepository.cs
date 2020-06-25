@@ -63,10 +63,13 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
         {
             using (var context = _contextFactory.CreateDataContext())
             {
-                var result = await context.PartnerVouchersDailyStatistics
-                    .Where(x => partnerIds.Contains(x.PartnerId) && x.Date >= fromDate.Date && x.Date <= toDate.Date)
-                    .ToListAsync();
+                var query =  context.PartnerVouchersDailyStatistics
+                    .Where(x => x.Date >= fromDate.Date && x.Date <= toDate.Date);
 
+                if (partnerIds != null && partnerIds.Any())
+                    query = query.Where(x => partnerIds.Contains(x.PartnerId));
+
+                var result = await query.ToListAsync();
                 return result;
             }
         }

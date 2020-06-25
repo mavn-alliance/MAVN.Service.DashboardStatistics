@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -29,9 +27,9 @@ namespace MAVN.Service.DashboardStatistics.Controllers
         [HttpPost]
         [Route("totals")]
         [ProducesResponseType(typeof(IList<VoucherStatisticsResponse>), (int)HttpStatusCode.OK)]
-        public async Task<IList<VoucherStatisticsResponse>> GetTotalStatisticsAsync([FromBody][Required] Guid[] partnerIds)
+        public async Task<IList<VoucherStatisticsResponse>> GetTotalStatisticsAsync([FromBody] VoucherStatisticsRequest request)
         {
-            var currenciesStatistic = await _partnerStatisticService.GetCurrenciesStatistic(partnerIds);
+            var currenciesStatistic = await _partnerStatisticService.GetCurrenciesStatistic(request.PartnerIds);
 
             return currenciesStatistic.Select(x => _mapper.Map<VoucherStatisticsResponse>(x)).ToList();
         }
