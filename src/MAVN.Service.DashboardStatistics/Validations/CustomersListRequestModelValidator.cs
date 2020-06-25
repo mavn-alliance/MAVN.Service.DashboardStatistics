@@ -1,4 +1,4 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using MAVN.Service.DashboardStatistics.Client.Models.Customers;
 
 namespace MAVN.Service.DashboardStatistics.Validations
@@ -7,6 +7,9 @@ namespace MAVN.Service.DashboardStatistics.Validations
     public class CustomersListRequestModelValidator
         : BasePeriodRequestValidator<CustomersListRequestModel>
     {
-
+        public CustomersListRequestModelValidator()
+        {
+            
+        }
     }
 }

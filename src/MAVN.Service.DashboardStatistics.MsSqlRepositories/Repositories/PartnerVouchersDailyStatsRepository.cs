@@ -59,15 +59,17 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
             }
         }
 
-        public async Task<IReadOnlyList<IPartnerVouchersDailyStats>> GetByPartnerIdsAndPeriod(Guid[] partnerIds, DateTime fromDate, DateTime toDate)
+        public async Task<IReadOnlyList<IPartnerVouchersDailyStats>> GetByPartnerIdsAndPeriod(Guid[] partnerIds, bool filterByPartnerIds, DateTime fromDate, DateTime toDate)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
-                var result = await context.PartnerVouchersDailyStatistics
-                    .Where(x => partnerIds.Contains(x.PartnerId) && x.Date >= fromDate.Date && x.Date <= toDate.Date)
-                    .ToListAsync();
+                var query =  context.PartnerVouchersDailyStatistics.AsQueryable();
 
-                return result;
+                if (filterByPartnerIds && partnerIds != null)
+                    query = query.Where(x =>
+                        partnerIds.Contains(x.PartnerId) && x.Date >= fromDate.Date && x.Date <= toDate.Date);
+
+                return await query.ToListAsync();
             }
         }
     }

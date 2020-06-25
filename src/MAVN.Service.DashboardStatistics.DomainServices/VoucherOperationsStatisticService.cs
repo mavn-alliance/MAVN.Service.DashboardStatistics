@@ -54,9 +54,9 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
             throw new InvalidOperationException("Couldn't acquire a lock in Redis");
         }
 
-        public async Task<IList<CurrenciesStatistic>> GetCurrenciesStatistic(Guid[] partnerIds)
+        public async Task<IList<CurrenciesStatistic>> GetCurrenciesStatistic(Guid[] partnerIds, bool filterByPartnerIds)
         {
-            var statistic = await _voucherOperationsStatisticRepository.GetByPartnerIds(partnerIds);
+            var statistic = await _voucherOperationsStatisticRepository.GetByPartnerIds(partnerIds, filterByPartnerIds);
             var currencyGroups = statistic
                 .GroupBy(x => x.Currency);
             var currenciesStatistics = new List<CurrenciesStatistic>();
@@ -85,9 +85,9 @@ namespace MAVN.Service.DashboardStatistics.DomainServices
             return currenciesStatistics;
         }
 
-        public async Task<VouchersDailyStatistics> GetPartnerDailyVoucherStatistic(Guid[] partnerIds, DateTime fromDate, DateTime toDate)
+        public async Task<VouchersDailyStatistics> GetPartnerDailyVoucherStatistic(Guid[] partnerIds, bool filterByPartnerIds, DateTime fromDate, DateTime toDate)
         {
-            var statistic = await _partnerVouchersDailyStatsRepository.GetByPartnerIdsAndPeriod(partnerIds, fromDate, toDate);
+            var statistic = await _partnerVouchersDailyStatsRepository.GetByPartnerIdsAndPeriod(partnerIds, filterByPartnerIds, fromDate, toDate);
 
             var result = new VouchersDailyStatistics
             {

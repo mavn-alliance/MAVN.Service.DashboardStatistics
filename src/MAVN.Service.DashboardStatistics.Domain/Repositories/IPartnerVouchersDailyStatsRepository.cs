@@ -9,7 +9,7 @@ namespace MAVN.Service.DashboardStatistics.Domain.Repositories
     {
         Task UpdateByDateAndCurrencyAndOperationType(UpdateVoucherOperationsStatistic partnerStatistic);
 
-        Task<IReadOnlyList<IPartnerVouchersDailyStats>> GetByPartnerIdsAndPeriod(Guid[] partnerIds, DateTime fromDate,
+        Task<IReadOnlyList<IPartnerVouchersDailyStats>> GetByPartnerIdsAndPeriod(Guid[] partnerIds, bool filterByPartnerIds, DateTime fromDate,
             DateTime toDate);
     }
 }

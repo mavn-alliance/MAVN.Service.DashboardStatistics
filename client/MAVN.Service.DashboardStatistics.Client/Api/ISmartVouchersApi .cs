@@ -16,10 +16,10 @@ namespace MAVN.Service.DashboardStatistics.Client.Api
         /// <summary>
         /// Get total voucher operations statistics per Partner
         /// </summary>
-        /// <param name="partnerIds"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
         [Post("/api/smartvouchers/totals")]
-        Task<IList<VoucherStatisticsResponse>> GetTotalStatisticsAsync([Body] Guid[] partnerIds);
+        Task<IList<VoucherStatisticsResponse>> GetTotalStatisticsAsync([Body] VoucherStatisticsRequest request);
 
         /// <summary>
         /// Get daily voucher statistics

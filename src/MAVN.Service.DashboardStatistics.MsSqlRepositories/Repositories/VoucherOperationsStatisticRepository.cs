@@ -58,15 +58,16 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
             }
         }
 
-        public async Task<IList<VoucherOperationsStatistic>> GetByPartnerIds(Guid[] partnerIds)
+        public async Task<IList<VoucherOperationsStatistic>> GetByPartnerIds(Guid[] partnerIds, bool filterByPartnerIds)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
-                var entities = await context.VoucherOperationsStatistics
-                    .Where(x => partnerIds.Contains(x.Id))
-                    .ToListAsync();
+                var query =  context.VoucherOperationsStatistics.AsQueryable();
 
-                return entities.Select(x => _mapper.Map<VoucherOperationsStatistic>(x)).ToList();
+                if (filterByPartnerIds && partnerIds != null)
+                    query = query.Where(x => partnerIds.Contains(x.Id));
+
+                return await query.Select(x => _mapper.Map<VoucherOperationsStatistic>(x)).ToListAsync();
             }
         }
     }

@@ -17,14 +17,14 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
             _contextFactory = contextFactory;
         }
 
-        public async Task<int> GetRepeatCountAsync(DateTime startDate, DateTime endDate, Guid[] partnerIds)
+        public async Task<int> GetRepeatCountAsync(DateTime startDate, DateTime endDate, Guid[] partnerIds, bool filterByPartnerIds)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
                 var query = context.CustomerActivities
                     .Where(o => startDate <= o.ActivityDate && o.ActivityDate <= endDate);
 
-                if (partnerIds != null && partnerIds.Any())
+                if (filterByPartnerIds && partnerIds != null)
                     query = query.Where(o => o.PartnerId.HasValue && partnerIds.Contains(o.PartnerId.Value));
 
                 var count = await query
@@ -38,14 +38,14 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
             }
         }
 
-        public async Task<int> GetCountAsync(DateTime startDate, DateTime endDate, Guid[] partnerIds)
+        public async Task<int> GetCountAsync(DateTime startDate, DateTime endDate, Guid[] partnerIds, bool filterByPartnerIds)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
                 var query = context.CustomerActivities
                     .Where(o => startDate <= o.ActivityDate && o.ActivityDate <= endDate);
 
-                if (partnerIds != null && partnerIds.Any())
+                if (filterByPartnerIds && partnerIds != null)
                     query = query.Where(o => o.PartnerId.HasValue && partnerIds.Contains(o.PartnerId.Value));
 
                 var count = await query

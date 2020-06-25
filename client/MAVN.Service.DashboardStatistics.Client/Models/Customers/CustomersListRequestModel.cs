@@ -11,5 +11,10 @@ namespace MAVN.Service.DashboardStatistics.Client.Models.Customers
         /// Ids of partners, used for filtering
         /// </summary>
         public Guid[] PartnerIds { get; set; }
+
+        /// <summary>
+        /// Indicates whether to filter by partner ids
+        /// </summary>
+        public bool FilterByPartnerIds { get; set; }
     }
 }

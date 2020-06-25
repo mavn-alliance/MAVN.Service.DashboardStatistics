@@ -18,14 +18,14 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
             _contextFactory = contextFactory;
         }
 
-        public async Task<IReadOnlyDictionary<DateTime, int>> GetCountPerDayAsync(DateTime startDate, DateTime endDate, Guid[] partnerIds)
+        public async Task<IReadOnlyDictionary<DateTime, int>> GetCountPerDayAsync(DateTime startDate, DateTime endDate, Guid[] partnerIds, bool filterByPartnerIds)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
                 var query = context.CustomerStatistics
                     .Where(o => startDate <= o.TimeStamp && o.TimeStamp <= endDate);
 
-                if (partnerIds != null && partnerIds.Any())
+                if (filterByPartnerIds && partnerIds != null)
                     query = query.Where(o => o.PartnerId.HasValue && partnerIds.Contains(o.PartnerId.Value));
 
                 var items = await query
@@ -37,14 +37,14 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
             }
         }
 
-        public async Task<int> GetCountSync(DateTime endDate, Guid[] partnerIds)
+        public async Task<int> GetCountSync(DateTime endDate, Guid[] partnerIds, bool filterByPartnerIds)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
                 var query = context.CustomerStatistics
                     .Where(o => o.TimeStamp <= endDate);
 
-                if (partnerIds != null && partnerIds.Any())
+                if (filterByPartnerIds && partnerIds != null)
                     query = query.Where(o => o.PartnerId.HasValue && partnerIds.Contains(o.PartnerId.Value));
 
                 var count = await query.CountAsync();

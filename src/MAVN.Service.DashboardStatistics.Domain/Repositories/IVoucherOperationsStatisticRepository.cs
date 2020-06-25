@@ -9,6 +9,6 @@ namespace MAVN.Service.DashboardStatistics.Domain.Repositories
     {
         Task UpdateByCurrencyAndOperationType(UpdateVoucherOperationsStatistic partnerStatistic);
 
-        Task<IList<VoucherOperationsStatistic>> GetByPartnerIds(Guid[] partnerIds);
+        Task<IList<VoucherOperationsStatistic>> GetByPartnerIds(Guid[] partnerIds, bool filterByPartnerIds);
     }
 }

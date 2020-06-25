@@ -9,9 +9,9 @@ namespace MAVN.Service.DashboardStatistics.Domain.Services
     {
         Task UpdateVoucherOperationsStatistic(UpdateVoucherOperationsStatistic partnerStatistic);
 
-        Task<IList<CurrenciesStatistic>> GetCurrenciesStatistic(Guid[] partnerIds);
+        Task<IList<CurrenciesStatistic>> GetCurrenciesStatistic(Guid[] partnerIds, bool filterByPartnerIds);
 
-        Task<VouchersDailyStatistics> GetPartnerDailyVoucherStatistic(Guid[] partnerIds, DateTime fromDate,
+        Task<VouchersDailyStatistics> GetPartnerDailyVoucherStatistic(Guid[] partnerIds, bool filterByPartnerIds, DateTime fromDate,
             DateTime toDate);
     }
 }

@@ -31,10 +31,13 @@ namespace MAVN.Service.DashboardStatistics.Controllers
         [ProducesResponseType(typeof(CustomersStatisticResponse), (int) HttpStatusCode.OK)]
         public async Task<CustomersStatisticResponse> GetAsync([FromBody] CustomersListRequestModel request)
         {
+            if(request.FilterByPartnerIds && request.PartnerIds == null)
+                return new CustomersStatisticResponse();
+
             var startDate = request.FromDate.Date;
             var endDate = request.ToDate.Date.AddDays(1).AddMilliseconds(-1);
 
-            var statistic = await _customerStatisticService.GetAsync(startDate, endDate, request.PartnerIds);
+            var statistic = await _customerStatisticService.GetAsync(startDate, endDate, request.PartnerIds, request.FilterByPartnerIds);
 
             return _mapper.Map<CustomersStatisticResponse>(statistic);
         }
