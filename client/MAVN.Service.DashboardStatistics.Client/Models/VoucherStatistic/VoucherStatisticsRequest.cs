@@ -1,12 +1,11 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace MAVN.Service.DashboardStatistics.Client.Models.VoucherStatistic
 {
     /// <summary>
-    /// request model for vouchers daily statistics
+    /// Request to get voucher statistics
     /// </summary>
-    public class VouchersDailyStatisticsRequest : BasePeriodRequestModel
+    public class VoucherStatisticsRequest
     {
         /// <summary>
         /// Collection of partner ids
