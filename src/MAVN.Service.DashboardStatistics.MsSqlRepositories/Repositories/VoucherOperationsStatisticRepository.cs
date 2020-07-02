@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using MAVN.Common.MsSql;
+using MAVN.Persistence.PostgreSQL.Legacy;
 using MAVN.Service.DashboardStatistics.Domain.Models.VoucherStatistic;
 using MAVN.Service.DashboardStatistics.Domain.Repositories;
 using MAVN.Service.DashboardStatistics.MsSqlRepositories.Entities;
@@ -13,11 +13,11 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
 {
     public class VoucherOperationsStatisticRepository : IVoucherOperationsStatisticRepository
     {
-        private readonly MsSqlContextFactory<DashboardStatisticsContext> _contextFactory;
+        private readonly PostgreSQLContextFactory<DashboardStatisticsContext> _contextFactory;
         private readonly IMapper _mapper;
 
         public VoucherOperationsStatisticRepository(
-            MsSqlContextFactory<DashboardStatisticsContext> contextFactory,
+            PostgreSQLContextFactory<DashboardStatisticsContext> contextFactory,
             IMapper mapper)
         {
             _contextFactory = contextFactory;

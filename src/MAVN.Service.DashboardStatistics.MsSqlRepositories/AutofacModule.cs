@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using MAVN.Common.MsSql;
+using MAVN.Persistence.PostgreSQL.Legacy;
 using MAVN.Service.DashboardStatistics.Domain.Repositories;
 using MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories;
 
@@ -16,7 +16,7 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterMsSql(_connectionString,
+            builder.RegisterPostgreSQL(_connectionString,
                 connectionString => new DashboardStatisticsContext(connectionString, false),
                 dbConnection => new DashboardStatisticsContext(dbConnection));
 

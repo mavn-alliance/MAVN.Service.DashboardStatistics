@@ -1,19 +1,19 @@
-﻿using MAVN.Common.MsSql;
-using MAVN.Service.DashboardStatistics.Domain.Repositories;
+﻿using MAVN.Service.DashboardStatistics.Domain.Repositories;
 using MAVN.Service.DashboardStatistics.MsSqlRepositories.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MAVN.Persistence.PostgreSQL.Legacy;
 
 namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
 {
     public class CustomerStatisticRepository : ICustomerRegistrationRepository
     {
-        private readonly MsSqlContextFactory<DashboardStatisticsContext> _contextFactory;
+        private readonly PostgreSQLContextFactory<DashboardStatisticsContext> _contextFactory;
 
-        public CustomerStatisticRepository(MsSqlContextFactory<DashboardStatisticsContext> contextFactory)
+        public CustomerStatisticRepository(PostgreSQLContextFactory<DashboardStatisticsContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }

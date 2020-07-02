@@ -3,8 +3,8 @@ using System;
 using MAVN.Service.DashboardStatistics.MsSqlRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Migrations
 {
@@ -16,27 +16,32 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("dashboard_statistic")
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("MAVN.Service.DashboardStatistics.MsSqlRepositories.Entities.CustomerActivityEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("ActivityDate")
-                        .HasColumnName("activity_date");
+                        .HasColumnName("activity_date")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("ActivityType")
-                        .HasColumnName("activity_type");
+                        .HasColumnName("activity_type")
+                        .HasColumnType("integer");
 
                     b.Property<Guid>("CustomerId")
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("PartnerId")
-                        .HasColumnName("partner_id");
+                        .HasColumnName("partner_id")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -47,16 +52,20 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("CustomerId")
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("PartnerId")
-                        .HasColumnName("partner_id");
+                        .HasColumnName("partner_id")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("TimeStamp")
-                        .HasColumnName("time_stamp");
+                        .HasColumnName("time_stamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -72,27 +81,34 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Currency")
                         .IsRequired()
-                        .HasColumnName("currency");
+                        .HasColumnName("currency")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnName("date");
+                        .HasColumnName("date")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("OperationType")
                         .IsRequired()
-                        .HasColumnName("operation_type");
+                        .HasColumnName("operation_type")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("PartnerId")
-                        .HasColumnName("partner_id");
+                        .HasColumnName("partner_id")
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("Sum")
-                        .HasColumnName("sum");
+                        .HasColumnName("sum")
+                        .HasColumnType("numeric");
 
                     b.Property<int>("TotalCount")
-                        .HasColumnName("total_count");
+                        .HasColumnName("total_count")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -105,23 +121,29 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Currency")
-                        .HasColumnName("currency");
+                        .HasColumnName("currency")
+                        .HasColumnType("text");
 
                     b.Property<string>("OperationType")
                         .IsRequired()
-                        .HasColumnName("operation_type");
+                        .HasColumnName("operation_type")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("PartnerId")
-                        .HasColumnName("partner_id");
+                        .HasColumnName("partner_id")
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("Sum")
-                        .HasColumnName("sum");
+                        .HasColumnName("sum")
+                        .HasColumnType("numeric");
 
                     b.Property<int>("TotalCount")
-                        .HasColumnName("total_count");
+                        .HasColumnName("total_count")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

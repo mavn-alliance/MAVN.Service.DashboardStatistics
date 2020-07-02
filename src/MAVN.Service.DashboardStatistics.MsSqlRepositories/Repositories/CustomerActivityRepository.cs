@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using MAVN.Common.MsSql;
+using MAVN.Persistence.PostgreSQL.Legacy;
 using MAVN.Service.DashboardStatistics.Domain.Repositories;
 using MAVN.Service.DashboardStatistics.MsSqlRepositories.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -10,9 +10,9 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories.Repositories
 {
     public class CustomerActivityRepository : ICustomerActivityRepository
     {
-        private readonly MsSqlContextFactory<DashboardStatisticsContext> _contextFactory;
+        private readonly PostgreSQLContextFactory<DashboardStatisticsContext> _contextFactory;
 
-        public CustomerActivityRepository(MsSqlContextFactory<DashboardStatisticsContext> contextFactory)
+        public CustomerActivityRepository(PostgreSQLContextFactory<DashboardStatisticsContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }

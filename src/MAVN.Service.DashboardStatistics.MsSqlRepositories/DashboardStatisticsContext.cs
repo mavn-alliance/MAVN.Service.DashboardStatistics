@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Data.Common;
-using MAVN.Common.MsSql;
+using MAVN.Persistence.PostgreSQL.Legacy;
 using MAVN.Service.DashboardStatistics.Domain.Enums;
 using MAVN.Service.DashboardStatistics.MsSqlRepositories.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
 {
-    public class DashboardStatisticsContext : MsSqlContext
+    public class DashboardStatisticsContext : PostgreSQLContext
     {
         private const string Schema = "dashboard_statistic";
 
@@ -34,11 +34,11 @@ namespace MAVN.Service.DashboardStatistics.MsSqlRepositories
 
         public DbSet<PartnerVouchersDailyStatsEntity> PartnerVouchersDailyStatistics { get; set; }
 
-        protected override void OnLykkeConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnMAVNConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
 
-        protected override void OnLykkeModelCreating(ModelBuilder modelBuilder)
+        protected override void OnMAVNModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CustomerStatisticEntity>()
                 .HasIndex(c => c.CustomerId);
