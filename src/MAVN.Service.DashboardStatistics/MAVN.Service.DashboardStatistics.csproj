@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <OutputType>Exe</OutputType>
     <Version>1.0.0</Version>
     <UserSecretsId>d57e7c22-b420-456f-bce7-46989afbdce4</UserSecretsId>
@@ -14,17 +14,21 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Dockerfile">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Lykke.Sdk" Version="5.17.0" />
-    <PackageReference Include="Lykke.RabbitMqBroker" Version="7.13.2" />
+    <PackageReference Include="Lykke.Logs" Version="7.4.0" />
+    <PackageReference Include="Lykke.Sdk" Version="5.18.0" />
+    <PackageReference Include="Lykke.RabbitMqBroker" Version="7.13.3" />
     <PackageReference Include="MAVN.Job.TokensStatistics.Client" Version="1.1.0" />
     <PackageReference Include="MAVN.Service.CustomerManagement.Contract" Version="1.1.0" />
-    <PackageReference Include="MAVN.Service.CustomerProfile.Contract" Version="1.3.0" />
+    <PackageReference Include="MAVN.Service.CustomerProfile.Contract" Version="2.2.0" />
     <PackageReference Include="MAVN.Service.PartnersPayments.Contract" Version="1.1.0" />
     <PackageReference Include="MAVN.Service.Referral.Contract" Version="2.0.0" />
     <PackageReference Include="MAVN.Service.WalletManagement.Contract" Version="1.1.1" />
